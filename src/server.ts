@@ -59,6 +59,11 @@ app.post('/cursos', (request, response) => {
   const curso = {
     id: cursos.length + 1,
     name: data.name,
+    description: data.description,
+    value: data.value,
+    image: data.image,
+    disponibility: data.disponibility,
+    category_id: data.category_id,
     created_at: '2022-10-10',
     updated_at: '2022-10-10',
   };
