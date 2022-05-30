@@ -29,6 +29,13 @@ export class CategoryService {
     }
   }
 
+  async show(id: string): Promise<CreatedCategoryDto> {
+    const category = await this.categoryRepository.findOne({ id });
+    if (category) {
+      return new CreatedCategoryDto({ id: category.id, name: category.name });
+    } else return new CategoryEntity();
+  }
+
   async create({ name }: CreateCategoryDto): Promise<CreatedCategoryDto> {
     try {
       const createCategory = this.categoryRepository.create({ name });

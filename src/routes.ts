@@ -27,6 +27,13 @@ routes.get(
 
 routes.post(
   '/categories',
+  [
+    body('name', "Valor 'name' não pode ser vazio!").isString(),
+    body('name', "O campo 'name' é obrigatório!")
+      .not()
+      .isEmpty({ ignore_whitespace: true }),
+  ],
+
   (request: Request, response: Response, next: NextFunction) => {
     categoryController.create(request, response).catch((error: Error) => {
       next(error);
