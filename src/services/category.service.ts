@@ -1,8 +1,3 @@
-/* eslint-disable indent */
-/* eslint-disable require-jsdoc */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable comma-dangle */
-/* eslint-disable max-len */
 import { DataSource, Repository } from 'typeorm';
 import { CreateCategoryDto } from '../dtos/category/create-category.dto';
 import { CreatedCategoryDto } from '../dtos/category/created-category.dto';
@@ -30,10 +25,10 @@ export class CategoryService {
   }
 
   async show(id: string): Promise<CreatedCategoryDto> {
-    const category = await this.categoryRepository.findOne({ id });
-    if (category) {
+    const category = await this.categoryRepository.findOne({ where: { id } });
+    if (category)
       return new CreatedCategoryDto({ id: category.id, name: category.name });
-    } else return new CategoryEntity();
+    else return new CategoryEntity();
   }
 
   async create({ name }: CreateCategoryDto): Promise<CreatedCategoryDto> {
@@ -44,6 +39,17 @@ export class CategoryService {
     } catch (error) {
       throw new HttpException(
         'Houve um erro ao adicionar categoria!',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async update(id: string, name: string): Promise<void> {
+    try {
+      await this.categoryRepository.update(id, { name });
+    } catch (error) {
+      throw new HttpException(
+        'Houve um erro ao atualizar categoria!',
         HttpStatus.BAD_REQUEST,
       );
     }

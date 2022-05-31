@@ -1,8 +1,5 @@
-/* eslint-disable indent */
-/* eslint-disable require-jsdoc */
-/* eslint-disable new-cap */
-/* eslint-disable object-curly-spacing */
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { CourseEntity } from './course.entity';
 
 @Entity({ name: 'categories' })
 export class CategoryEntity {
@@ -11,4 +8,7 @@ export class CategoryEntity {
 
   @Column({ type: 'varchar', nullable: false })
   name!: string;
+
+  @OneToMany(() => CourseEntity, (course) => course.category)
+  courses?: CourseEntity[];
 }
